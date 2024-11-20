@@ -1,0 +1,18 @@
+---
+- name: Set hostname for multiple Juniper Switches
+  hosts: switches
+  gather_facts: no
+  vars_files:
+    - vars.yml  # Load the variables from vars.yml
+    - vault.yml # This includes the encrypted credentials
+
+  tasks:
+    - name: Set the hostname for each switch
+      junipernetworks.junos.junos_config:
+        lines:
+          - set system host-name "{{ item.name }}"  # Use the variable for each switch
+        commit: yes
+      loop: "{{ switches }}"  # Loop through each switch in the list
+      vars:
+        ansible_user: "{{ ssh_username }}"  # Use the username from the vault
+        ansible_ssh_pass: "{{ ssh_password }}"  # Use the password from the vault
