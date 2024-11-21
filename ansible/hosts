@@ -2,4 +2,4 @@
 192.168.0.101 ansible_network_os=ios
 
 [junos]
-jswitch01 ansible_host=192.168.69.11 ansible_network_os=junos
+jswitch01 ansible_host=192.168.69.11 ansible_network_os=junos ansible_ssh_pass={{ ansible_password }}

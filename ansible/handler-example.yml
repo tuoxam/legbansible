@@ -1,17 +1,35 @@
 ---
-- name: "Register Playbook"
-  hosts: all
-  gather_facts: false
-  connection: network_cli
 
-  tasks:
-    - name: "Push Config"
-      cisco.ios.ios_config:
-        src: "ntp.j2"
-      notify: ntp_handler_example
-      register: ntp_result
+name: "Register Playbook"
+hosts: all
+gather_facts: false
 
-  handlers:
-    - name: ntp_handler_example
-      debug:
-        msg: "{{ ntp_result }}"
+vars_files:
+
+vault.yml
+tasks:
+
+name: "Push Config for IOS"
+when: ansible_network_os == 'ios'
+cisco.ios.ios_config:
+src: "ntp.j2"
+notify: ntp_handler_example
+register: ntp_result_ios
+
+name: "Push Config for Junos"
+when: ansible_network_os == 'junos'
+junipernetworks.junos.junos_config:
+src: "ntp.j2"
+notify: ntp_handler_example
+register: ntp_result_junos
+
+handlers:
+
+name: ntp_handler_example
+debug:
+msg: >
+{% if ansible_network_os == 'ios' %}
+{{ ntp_result_ios }}
+{% elif ansible_network_os == 'junos' %}
+{{ ntp_result_junos }}
+{% endif %}
