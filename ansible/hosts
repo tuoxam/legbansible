@@ -1,3 +1,2 @@
----
 [switches]
-jswitch01 ansible_host=192.168.69.11
+jswitch01 ansible_host=192.168.69.11 ansible_network_os=junos
