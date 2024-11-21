@@ -15,9 +15,8 @@ eigrp_style: "normal"
 
 eigrp: 
   asn: "2"
-
 # host_vars/router1.yml
 ntp:
   servers:
     - 8.8.8.8
-    - 1.pool.ntp.org
+    - 3.pool.ntp.org

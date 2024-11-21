@@ -1,2 +1,4 @@
 switches:
   - name: jswitch01
+servers:
+  - name: jswitch01

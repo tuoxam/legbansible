@@ -1,12 +1,11 @@
 ---
 - name: "Register Playbook"
-  hosts: all
+  hosts: jswitch01
   gather_facts: false
-  connection: network_cli
 
   tasks:
     - name: "Push Config"
-      cisco.ios.ios_config:
+      junipernetworks.junos.junos_config:
         src: "ntp.j2"
       notify: ntp_handler_example
       register: ntp_result
