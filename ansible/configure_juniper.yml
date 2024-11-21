@@ -1,0 +1,39 @@
+- name: Set hostname for multiple Juniper Switches
+  hosts: switches
+  connection: network_cli
+  gather_facts: no
+  vars:
+    ansible_network_os: junos  # Set the network OS here
+
+  vars_files:
+    - vars.yml
+    - vault.yml
+
+  tasks:
+    - name: Debug Loaded Variables
+      debug:
+        msg: "ansible_user={{ ansible_user }} ansible_password={{ ansible_password }}"
+
+    # Debugging the switch name to check for unexpected characters in item.name
+    - name: Debug switch name (checking item.name for unexpected characters)
+      debug:
+        msg: "Switch name: '{{ item.name }}'"
+      loop: "{{ switches }}"
+
+    # Enter configuration mode, ensuring it succeeds before continuing
+    - name: Enter configuration mode and set hostname
+      junipernetworks.junos.junos_command:
+        commands:
+          - configure
+          - "set system host-name {{ item.name }}"
+          - commit
+      loop: "{{ switches }}"
+      register: result
+      failed_when: result.failed
+      retries: 3
+      delay: 10
+      until: result.stdout | length > 0
+
+    - name: Check config mode result and hostname set status
+      debug:
+        msg: "Configuration mode and hostname set: {{ result }}"
