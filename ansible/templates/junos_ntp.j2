@@ -1,3 +1,4 @@
-{% for srv in ntp.servers %}
-set system ntp server {{ srv }}
+set system ntp server {{ item }}
+{% for item in ntp_servers %}
+set system ntp server {{ item }}
 {% endfor %}

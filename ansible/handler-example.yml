@@ -3,7 +3,6 @@
   hosts: all
   become: yes
   gather_facts: false
-  connection: network_cli
   tasks:
     - name: debug ntp variable
       debug:
@@ -15,23 +14,18 @@
       notify: ntp_handler_example
       register: ntp_result_ios
 
-    - name: "Push Config for Junos"
-      when: ansible_network_os == 'junipernetworks.junos.junos'
+    - name: Apply NTP configuration from a template
+      when: ansible_network_os == 'junos'
       junipernetworks.junos.junos_config:
         src: "junos_ntp.j2"
-      notify: ntp_handler_example
+        comment: "Updating NTP configuration"
+      vars:
+        ntp_servers: "{{ hostvars[inventory_hostname].ntp.servers }}"
 
     - name: "Save Config for IOS"
       when: ansible_network_os == 'ios'
       cisco.ios.ios_command:
         commands: "copy running-config startup-config"
-
-    - name: "Commit Config for Junos"
-      when: ansible_network_os == 'junos'
-      junipernetworks.junos.junos_command:
-        commands:
-          - "edit"
-          - "commit"
 
   handlers:
     - name: ntp_handler_example

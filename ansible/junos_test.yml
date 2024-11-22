@@ -1,0 +1,6 @@
+- name: Test connectivity to Junos devices
+  hosts: junos_devices
+  gather_facts: false
+  tasks:
+    - name: Test NETCONF connection
+      ansible.builtin.ping:
