@@ -1,6 +1,7 @@
 ---
 - name: "Register Playbook"
   hosts: all
+  become: yes
   gather_facts: false
   connection: network_cli
   tasks:

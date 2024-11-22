@@ -31,32 +31,22 @@ redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.
 [WARNING]: Collection ansible.netcommon does not support Ansible version
 2.13.13
 redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
 [WARNING]: Collection ansible.netcommon does not support Ansible version
 2.13.13
-[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
 redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
-redirecting (type: terminal) ansible.builtin.ios to cisco.ios.ios
 [WARNING]: Collection ansible.netcommon does not support Ansible version
 2.13.13
-redirecting (type: cliconf) ansible.builtin.ios to cisco.ios.ios
-[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+redirecting (type: terminal) ansible.builtin.ios to cisco.ios.ios
 [WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
 redirecting (type: terminal) ansible.builtin.junos to junipernetworks.junos.junos
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+redirecting (type: cliconf) ansible.builtin.ios to cisco.ios.ios
 redirecting (type: cliconf) ansible.builtin.junos to junipernetworks.junos.junos
 redirecting (type: terminal) ansible.builtin.junos to junipernetworks.junos.junos
 redirecting (type: cliconf) ansible.builtin.junos to junipernetworks.junos.junos
 [WARNING]: ansible-pylibssh not installed, falling back to paramiko
 ok: [cswitch01] => {
-    "ntp": {
-        "servers": [
-            "192.168.1.1",
-            "192.168.1.2",
-            "192.168.1.3"
-        ]
-    }
-}
-[WARNING]: ansible-pylibssh not installed, falling back to paramiko
-ok: [jswitch01] => {
     "ntp": {
         "servers": [
             "192.168.1.1",
@@ -74,23 +64,33 @@ ok: [jswitch02] => {
         ]
     }
 }
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [jswitch01] => {
+    "ntp": {
+        "servers": [
+            "192.168.1.1",
+            "192.168.1.2",
+            "192.168.1.3"
+        ]
+    }
+}
 
 TASK [Push Config for IOS] *****************************************************
 task path: /home/dadmin/github/legbansible/ansible/handler-example.yml:10
 redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
 [WARNING]: Collection ansible.netcommon does not support Ansible version
 2.13.13
-[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
 skipping: [jswitch01] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+skipping: [jswitch02] => {
     "changed": false,
     "skip_reason": "Conditional result was False"
 }
 redirecting (type: terminal) ansible.builtin.ios to cisco.ios.ios
 redirecting (type: cliconf) ansible.builtin.ios to cisco.ios.ios
-skipping: [jswitch02] => {
-    "changed": false,
-    "skip_reason": "Conditional result was False"
-}
 The full traceback is:
   File "/home/dadmin/.ansible/collections/ansible_collections/cisco/ios/plugins/module_utils/network/ios/ios.py", line 90, in get_config
     out = connection.get_config(flags=flags)
