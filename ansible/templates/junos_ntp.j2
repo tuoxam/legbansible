@@ -1,4 +1,3 @@
-set system ntp server {{ item }}
 {% for item in ntp_servers %}
 set system ntp server {{ item }}
 {% endfor %}
