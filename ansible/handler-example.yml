@@ -2,10 +2,6 @@
 - name: "Register Playbook"
   hosts: all
   gather_facts: false
-
-  vars_files:
-    - vault.yml
-
   tasks:
     - name: "Push Config for IOS"
       when: ansible_network_os == 'ios'
