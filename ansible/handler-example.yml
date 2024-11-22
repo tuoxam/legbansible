@@ -20,7 +20,18 @@
       junipernetworks.junos.junos_config:
         src: "junos_ntp.j2"
       notify: ntp_handler_example
-      register: ntp_result_junos
+
+    - name: "Save Config for IOS"
+      when: ansible_network_os == 'ios'
+      cisco.ios.ios_command:
+        commands: "copy running-config startup-config"
+
+    - name: "Commit Config for Junos"
+      when: ansible_network_os == 'junos'
+      junipernetworks.junos.junos_command:
+        commands:
+          - "edit"
+          - "commit"
 
   handlers:
     - name: ntp_handler_example
