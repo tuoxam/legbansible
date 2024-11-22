@@ -2,18 +2,22 @@
 - name: "Register Playbook"
   hosts: all
   gather_facts: false
+  connection: network_cli
   tasks:
+    - name: debug ntp variable
+      debug:
+        var: ntp
     - name: "Push Config for IOS"
       when: ansible_network_os == 'ios'
       cisco.ios.ios_config:
-        src: "ntp.j2"
+        src: "ios_ntp.j2"
       notify: ntp_handler_example
       register: ntp_result_ios
 
     - name: "Push Config for Junos"
-      when: ansible_network_os == 'junos'
+      when: ansible_network_os == 'junipernetworks.junos.junos'
       junipernetworks.junos.junos_config:
-        src: "ntp.j2"
+        src: "junos_ntp.j2"
       notify: ntp_handler_example
       register: ntp_result_junos
 

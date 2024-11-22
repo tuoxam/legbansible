@@ -1,20 +1,5 @@
----
-BGP:
-  ASN: "65002"
-  peers:
-    - neighbor: "10.0.0.1"
-      peer_asn: "65001"
-
-    - neighbor: "12.12.12.12"
-      peer_asn: "12"
-
-eigrp_style: "normal"
-
-eigrp: 
-  asn: "2"
-
-# host_vars/router1.yml
 ntp:
   servers:
-    - 8.8.8.8
-    - 1.pool.ntp.org
+    - 192.168.1.1
+    - 192.168.1.2
+    - 192.168.1.3
