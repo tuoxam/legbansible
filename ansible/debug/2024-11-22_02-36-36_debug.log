@@ -1,0 +1,141 @@
+ansible-playbook [core 2.13.13]
+  config file = /home/dadmin/github/legbansible/ansible/ansible.cfg
+  configured module search path = ['/home/dadmin/.ansible/plugins/modules', '/usr/share/ansible/plugins/modules']
+  ansible python module location = /home/dadmin/.local/lib/python3.8/site-packages/ansible
+  ansible collection location = /home/dadmin/.ansible/collections:/usr/share/ansible/collections
+  executable location = /home/dadmin/.local/bin/ansible-playbook
+  python version = 3.8.10 (default, Nov  7 2024, 13:10:47) [GCC 9.4.0]
+  jinja version = 3.1.4
+  libyaml = True
+Using /home/dadmin/github/legbansible/ansible/ansible.cfg as config file
+host_list declined parsing /home/dadmin/github/legbansible/ansible/hosts as it did not pass its verify_file() method
+script declined parsing /home/dadmin/github/legbansible/ansible/hosts as it did not pass its verify_file() method
+auto declined parsing /home/dadmin/github/legbansible/ansible/hosts as it did not pass its verify_file() method
+Parsed /home/dadmin/github/legbansible/ansible/hosts inventory source with ini plugin
+[WARNING]: Collection cisco.ios does not support Ansible version 2.13.13
+[WARNING]: Collection junipernetworks.junos does not support Ansible version
+2.13.13
+Skipping callback 'default', as we already have a stdout callback.
+Skipping callback 'minimal', as we already have a stdout callback.
+Skipping callback 'oneline', as we already have a stdout callback.
+
+PLAYBOOK: handler-example.yml **************************************************
+1 plays in handler-example.yml
+
+PLAY [Register Playbook] *******************************************************
+META: ran handlers
+
+TASK [debug ntp variable] ******************************************************
+task path: /home/dadmin/github/legbansible/ansible/handler-example.yml:7
+redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
+[WARNING]: Collection ansible.netcommon does not support Ansible version
+2.13.13
+redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
+[WARNING]: Collection ansible.netcommon does not support Ansible version
+2.13.13
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
+redirecting (type: terminal) ansible.builtin.ios to cisco.ios.ios
+[WARNING]: Collection ansible.netcommon does not support Ansible version
+2.13.13
+redirecting (type: cliconf) ansible.builtin.ios to cisco.ios.ios
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+redirecting (type: terminal) ansible.builtin.junos to junipernetworks.junos.junos
+redirecting (type: cliconf) ansible.builtin.junos to junipernetworks.junos.junos
+redirecting (type: terminal) ansible.builtin.junos to junipernetworks.junos.junos
+redirecting (type: cliconf) ansible.builtin.junos to junipernetworks.junos.junos
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [cswitch01] => {
+    "ntp": {
+        "servers": [
+            "192.168.1.1",
+            "192.168.1.2",
+            "192.168.1.3"
+        ]
+    }
+}
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [jswitch01] => {
+    "ntp": {
+        "servers": [
+            "192.168.1.1",
+            "192.168.1.2",
+            "192.168.1.3"
+        ]
+    }
+}
+[WARNING]: ansible-pylibssh not installed, falling back to paramiko
+ok: [jswitch02] => {
+    "ntp": {
+        "servers": [
+            "12.12.12.1",
+            "12.12.12.2"
+        ]
+    }
+}
+
+TASK [Push Config for IOS] *****************************************************
+task path: /home/dadmin/github/legbansible/ansible/handler-example.yml:10
+redirecting (type: connection) ansible.builtin.network_cli to ansible.netcommon.network_cli
+[WARNING]: Collection ansible.netcommon does not support Ansible version
+2.13.13
+[WARNING]: Collection ansible.utils does not support Ansible version 2.13.13
+skipping: [jswitch01] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+redirecting (type: terminal) ansible.builtin.ios to cisco.ios.ios
+redirecting (type: cliconf) ansible.builtin.ios to cisco.ios.ios
+skipping: [jswitch02] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+The full traceback is:
+  File "/home/dadmin/.ansible/collections/ansible_collections/cisco/ios/plugins/module_utils/network/ios/ios.py", line 90, in get_config
+    out = connection.get_config(flags=flags)
+  File "/home/dadmin/.local/lib/python3.8/site-packages/ansible/module_utils/connection.py", line 200, in __rpc__
+    raise ConnectionError(to_text(msg, errors='surrogate_then_replace'), code=code)
+fatal: [cswitch01]: FAILED! => {
+    "changed": false,
+    "invocation": {
+        "module_args": {
+            "after": null,
+            "backup": false,
+            "backup_options": null,
+            "before": null,
+            "defaults": false,
+            "diff_against": null,
+            "diff_ignore_lines": null,
+            "intended_config": null,
+            "lines": null,
+            "match": "line",
+            "multiline_delimiter": "@",
+            "parents": null,
+            "replace": "line",
+            "running_config": null,
+            "save_when": "never",
+            "src": "ntp server 192.168.1.1\nntp server 192.168.1.2\nntp server 192.168.1.3\n"
+        }
+    },
+    "msg": "operation requires privilege escalation"
+}
+
+TASK [Push Config for Junos] ***************************************************
+task path: /home/dadmin/github/legbansible/ansible/handler-example.yml:17
+skipping: [jswitch01] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+skipping: [jswitch02] => {
+    "changed": false,
+    "skip_reason": "Conditional result was False"
+}
+META: ran handlers
+META: ran handlers
+
+PLAY RECAP *********************************************************************
+cswitch01                  : ok=1    changed=0    unreachable=0    failed=1    skipped=0    rescued=0    ignored=0   
+jswitch01                  : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+jswitch02                  : ok=1    changed=0    unreachable=0    failed=0    skipped=2    rescued=0    ignored=0   
+
