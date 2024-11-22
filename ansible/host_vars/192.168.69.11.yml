@@ -1,7 +1,4 @@
 ---
-
-ntp: "99.99.99.99"
-
 BGP:
   ASN: "65002"
   peers:
@@ -15,8 +12,9 @@ eigrp_style: "normal"
 
 eigrp: 
   asn: "2"
+
 # host_vars/router1.yml
 ntp:
   servers:
     - 8.8.8.8
-    - 3.pool.ntp.org
+    - 1.pool.ntp.org

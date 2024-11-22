@@ -1,3 +1,7 @@
-# vault.yml
-ansible_user: root
-ansible_password: Juckyball777!
+ios:
+  ansible_user: root
+  ansible_password: Cuckyball777!
+
+junos:
+  ansible_user: root
+  ansible_password: Juckyball777!
