@@ -1,0 +1,9 @@
+---
+- name: "Printe some encrypted stuff"
+  hosts: junos_devices
+  gather_facts: no
+
+  tasks:
+    - name: "Task 1 decrypt and print"
+      debug:
+        msg: "{{ snmp_stuff }}"
