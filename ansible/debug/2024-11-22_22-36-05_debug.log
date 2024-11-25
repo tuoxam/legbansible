@@ -1,0 +1,4 @@
+[WARNING]: Collection cisco.ios does not support Ansible version 2.13.13
+
+PLAY [Playbook 1: Testing Genie] ***********************************************
+ERROR! Attempting to decrypt but no vault secrets found
