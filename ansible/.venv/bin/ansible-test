@@ -1,4 +1,4 @@
-#!/home/dadmin/github/legbansible/ansible/.venv/bin/python3
+#!/home/dadmin/github/legbansible/ansible/.venv/bin/python3.9
 # PYTHON_ARGCOMPLETE_OK
 """Command line entry point for ansible-test."""
 

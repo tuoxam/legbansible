@@ -1,6 +1,6 @@
 ansible_user: root
 ansible_password: "Cuckyball777!"
-ansible_network_os: "ios"
+ansible_network_os: cisco.ios.ios
 ansible_become: true
 ansible_become_user: root
 ansible_become_password: "Cuckyball777!"

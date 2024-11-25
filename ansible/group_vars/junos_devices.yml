@@ -1,6 +1,6 @@
 ansible_user: root
 ansible_password: "Juckyball777!"
-ansible_network_os: "junos"
+ansible_network_os: junipernetworks.junos.junos
 ansible_become: true
 ansible_become_user: root
 ansible_become_password: "Juckyball777!"

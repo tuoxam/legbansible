@@ -7,13 +7,13 @@
       cisco.ios.ios_facts:
         gather_subset: config
       register: ios_facts
-      when: ansible_network_os == 'ios'
+      when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: "pull junos facts"
       junipernetworks.junos.junos_facts:
         gather_subset: config
       register: junos_facts
-      when: ansible_network_os == 'junos'
+      when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "pull vyos facts"
       vyos.vyos.vyos_facts:
@@ -23,13 +23,13 @@
 
     - name: "Print Cisco Output"
       debug:
-        msg: "{{ ios_facts.ansible_facts.ansible_net_config.split('\n') }}"
-      when: "ansible_network_os == 'ios'"
+        msg: "{{ ios_facts.ansible_facts.ansible_net_config[0].split('\n') }}"
+      when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: "Print Junos Output"
       debug:
         msg: "{{ junos_facts.ansible_facts.ansible_net_config[0].split('\n') }}"
-      when: "ansible_network_os == 'junos'"
+      when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "Print Vyos Output"
       debug:

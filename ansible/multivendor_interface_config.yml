@@ -1,0 +1,88 @@
+---
+- name: "multivendor fact gathering and config"
+  hosts: all
+
+  tasks:
+    - name: "pull ios facts"
+      cisco.ios.ios_facts:
+        gather_subset: config
+
+    - name: Merge provided configuration with device configuration
+      cisco.ios.ios_interfaces:
+        config:
+          - name: GigabitEthernet2
+            description: Configured and Merged by Ansible Network new
+            enabled: true
+          - name: GigabitEthernet3
+            description: Configured and Merged by Ansible Network
+            mtu: 1500
+            enabled: false
+            speed: 1000
+            duplex: full
+        state: merged
+      register: ios_facts
+      when: "ansible_network_os == 'cisco.ios.ios'"
+
+    - name: "pull junos facts"
+      junipernetworks.junos.junos_facts:
+        gather_subset: config
+
+    - name:
+        Merge provided configuration with device configuration (default operation
+        is merge)
+      junipernetworks.junos.junos_interfaces:
+        config:
+          - name: ge-0/0/3
+            description: Configured by Ansible-1
+            enabled: true
+            units:
+              - name: 0
+                description: "This is logical intf unit0 new"
+            mtu: 1500
+          - name: ge-0/0/2
+            description: Configured by Ansible-2
+            enabled: false
+        state: merged
+      register: junos_facts
+      when: "ansible_network_os == 'junipernetworks.junos.junos'"
+
+    - name: "pull vyos facts"
+      vyos.vyos.vyos_facts:
+        gather_subset: config
+
+    - name: Merge provided configuration with device configuration
+      vyos.vyos.vyos_interfaces:
+        config:
+          - name: eth2
+            description: Configured by Ansible new
+            enabled: true
+            vifs:
+              - vlan_id: 200
+                description: VIF 200 - ETH2
+          - name: eth3
+            description: Configured by Ansible
+            mtu: 1500
+          - name: bond1
+            description: Bond - 1
+            mtu: 1500
+          - name: vti2
+            description: VTI - 2
+            enabled: false
+        state: merged
+      register: vyos_facts
+      when: "ansible_network_os == 'vyos.vyos.vyos'"
+
+    - name: "Print Cisco Output"
+      debug:
+        msg: "{{ ios_facts.commands }}"
+      when: "ansible_network_os == 'cisco.ios.ios'"
+
+    - name: "Print Junos Output"
+      debug:
+        msg: "{{ junos_facts.commands}}"
+      when: "ansible_network_os == 'junipernetworks.junos.junos'"
+
+    - name: "Print Vyos Output"
+      debug:
+        msg: "{{ vyos_facts.commands }}"
+      when: "ansible_network_os == 'vyos.vyos.vyos'"
