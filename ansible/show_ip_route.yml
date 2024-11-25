@@ -1,0 +1,16 @@
+---
+# I barely understand any of this
+
+- name: "Playbook 1: Testing Genie"
+  hosts: cswitch01
+  connection: network_cli
+
+  tasks:
+    - name: "Task 1 - send a show command"
+      cisco.ios.ios_command:
+        commands: "show ip route"
+      register: show_ip_route_output
+
+    - name: "Debug show_ip_route_output"
+      debug:
+        msg: "{{ show_ip_route_output.stdout[0] }}"

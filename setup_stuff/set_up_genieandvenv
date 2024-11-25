@@ -1,0 +1,16 @@
+cd ansible/
+python3 -m venv .venv
+.venv/bin/activate
+cd .venv/
+cd ..
+source .venv/bin/activate
+pip install --upgrade pip setuptools
+pip install ansible
+pip install pyats[full] genie
+pip install ansible-lint
+ansible-galaxy collection install cisco.ios junipernetworks.junos
+alias ansible_env="source ~/github/legbansible/ansible/.venv/bin/activate"
+sudo apt install direnveval "$(direnv hook bash)"  # or "eval "$(direnv hook zsh)"
+echo "source .venv/bin/activate" > .envrc
+direnv allow
+echo '{"terminal.integrated.env.linux": {"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"}, "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"}' > .vscode/settings.json
