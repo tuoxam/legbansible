@@ -4,8 +4,13 @@
   connection: network_cli
 
   tasks:
-    - name: "Push some banner to vyos"
+    - name: "Remove Push some banner to vyos"
       vyos.vyos.vyos_banner:
         banner: pre-login
-        text: "CBT Nuggers banner for vyos"
+        state: absent
+
+    - name: " Add post login banner"
+      vyos.vyos.vyos_banner:
+        banner: post-login
+        text: " Post login banner"
         state: present
