@@ -1,0 +1,11 @@
+---
+- name: "VyOS Playbook"
+  hosts: vswitch01
+  connection: network_cli
+
+  tasks:
+    - name: "Push some banner to vyos"
+      vyos.vyos.vyos_banner:
+        banner: pre-login
+        text: "CBT Nuggers banner for vyos"
+        state: present

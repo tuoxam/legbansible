@@ -1,0 +1,7 @@
+ansible_user: "vyos"
+ansible_password: "Vuckyball777!"
+ansible_network_os: "vyos.vyos.vyos"
+ansible_become: yes
+ansible_become_user: vyos
+ansible_become_password: "Vuckyball777!"
+

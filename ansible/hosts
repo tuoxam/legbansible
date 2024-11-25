@@ -1,7 +1,10 @@
 # Example inventory file (not recommended for passwords)
 [ios_devices]
-cswitch01 ansible_host=192.168.69.13 ansible_user=root ansible_password=Cuckyball777! ansible_network_os=ios ansible_become_password=Cuckyball777! ansible_connection=network_cli
+cswitch01 ansible_host=192.168.69.13
 
 [junos_devices]
-jswitch01 ansible_host=192.168.69.11 ansible_user=root ansible_password=Juckyball777! ansible_network_os=junos ansible_become_password=Buckyball777! ansible_connection=netconf
-jswitch02 ansible_host=192.168.69.12 ansible_user=root ansible_password=Juckyball777! ansible_network_os=junos ansible_become_password==Buckyball777! ansible_connection=netconf
+jswitch01 ansible_host=192.168.69.11
+jswitch02 ansible_host=192.168.69.12
+
+[vyos_devices]
+vswitch01 ansible_host=192.168.69.14
