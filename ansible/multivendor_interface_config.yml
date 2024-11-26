@@ -78,18 +78,9 @@
     - name: Merge provided configuration with device configuration
       vyos.vyos.vyos_interfaces:
         config:
-          - name: eth2
-            description: Configured by Ansible
-            enabled: true
-            vifs:
-              - vlan_id: 200
-                description: VIF 200 - ETH2
-          - name: bond1
-            description: Bond - 1
-            mtu: 1200
-          - name: vti2
-            description: VTI - 2
-            enabled: false
+          - name: eth0
+            description: "Configured by Ansible"
+            enabled: true            
         state: merged
       register: vyos_facts
       when: "ansible_network_os == 'vyos.vyos.vyos'"
@@ -101,7 +92,7 @@
 
     - name: "Print Junos Output"
       debug:
-        msg: "{{ junos_facts.commands.split('nc/')  }}"
+        msg: "{{ junos_facts.commands }}"
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "Print Vyos Output"

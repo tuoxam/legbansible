@@ -1,37 +1,37 @@
 ---
-- name: "multivendor fact gathering"
+- name: "Multivendor fact gathering"
   hosts: all
 
   tasks:
-    - name: "pull ios facts"
+    - name: "Pull ios facts"
       cisco.ios.ios_facts:
         gather_subset: config
       register: ios_facts
       when: "ansible_network_os == 'cisco.ios.ios'"
 
-    - name: "pull junos facts"
+    - name: "Pull junos facts"
       junipernetworks.junos.junos_facts:
         gather_subset: config
       register: junos_facts
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
-    - name: "pull vyos facts"
+    - name: "Pull vyos facts"
       vyos.vyos.vyos_facts:
         gather_subset: config
       register: vyos_facts
       when: "ansible_network_os == 'vyos.vyos.vyos'"
 
     - name: "Print Cisco Output"
-      debug:
+      ansible.builtin.debug:
         msg: "{{ ios_facts.ansible_facts.ansible_net_config.split('\n') }}" # ios already returns a string. this splits it into lines when it sees \n
       when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: "Print Junos Output"
-      debug:
+      ansible.builtin.debug:
         msg: "{{ junos_facts.ansible_facts.ansible_net_config.split('\n') }}"
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "Print Vyos Output"
-      debug:
+      ansible.builtin.debug:
         msg: "{{ vyos_facts.ansible_facts.ansible_net_config[0].split('\n') }}" # vyos sends its output as a list. so we use [0] to unwrap it into a string and then split it
       when: "ansible_network_os == 'vyos.vyos.vyos'"
