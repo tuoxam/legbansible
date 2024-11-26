@@ -1,0 +1,10 @@
+ansible                  # Latest Ansible release
+pyats                     # Cisco's network automation framework
+genie                     # pyATS Genie libraries for parsing and testing
+cryptography              # Required by both Ansible and network modules
+Jinja2                    # Template engine used by Ansible
+PyYAML                    # YAML support for configuration files
+netmiko                   # Simplified CLI automation for network devices
+ncclient                  # NETCONF client, often used with Junos
+paramiko                  # SSH client library
+packaging                 # Used by Python libraries for dependency resolution

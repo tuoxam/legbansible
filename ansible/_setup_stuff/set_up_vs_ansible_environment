@@ -1,0 +1,23 @@
+cd ansible/
+apt install python3.12-venv
+python3 -m venv .venv
+source .venv/bin/activate
+cd ..
+pip install --upgrade pip setuptools
+pip install -r ./setup_stuff/requirements.txt
+ansible-galaxy collection install cisco.ios junipernetworks.junos vyos.vyos
+pip install ansible-dev-tools --no-input
+#VS Code extensions
+- Ansible VS Code Extension by Red Hat (Select .venv environment)
+    - pip install ansible-dev-tools --no-input
+- Github copilot
+- Python
+- Jupyter
+- Pylance
+
+# Optional:
+alias ansible_env="source ~/github/legbansible/ansible/.venv/bin/activate"
+sudo apt install direnveval "$(direnv hook bash)"  # or "eval "$(direnv hook zsh)"
+echo "source .venv/bin/activate" > .envrc
+direnv allow
+echo '{"terminal.integrated.env.linux": {"PATH": "${workspaceFolder}/.venv/bin:${env:PATH}"}, "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python"}' > .vscode/settings.json

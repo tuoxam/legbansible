@@ -23,15 +23,15 @@
 
     - name: "Print Cisco Output"
       debug:
-        msg: "{{ ios_facts.ansible_facts.ansible_net_config[0].split('\n') }}"
+        msg: "{{ ios_facts.ansible_facts.ansible_net_config.split('\n') }}" # ios already returns a string. this splits it into lines when it sees \n
       when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: "Print Junos Output"
       debug:
-        msg: "{{ junos_facts.ansible_facts.ansible_net_config[0].split('\n') }}"
+        msg: "{{ junos_facts.ansible_facts.ansible_net_config.split('\n') }}"
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "Print Vyos Output"
       debug:
-        msg: "{{ vyos_facts.ansible_facts.ansible_net_config[0].split('\n') }}"
+        msg: "{{ vyos_facts.ansible_facts.ansible_net_config[0].split('\n') }}" # vyos sends its output as a list. so we use [0] to unwrap it into a string and then split it
       when: "ansible_network_os == 'vyos.vyos.vyos'"

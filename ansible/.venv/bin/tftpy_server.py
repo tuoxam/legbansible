@@ -1,4 +1,4 @@
-#!/home/dadmin/github/legbansible/ansible/.venv/bin/python3.9
+#!/home/dadmin/github/legbansible/ansible/.venv/bin/python3
 # vim: ts=4 sw=4 et ai:
 # -*- coding: utf8 -*-
 

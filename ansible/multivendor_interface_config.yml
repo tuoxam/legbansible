@@ -3,9 +3,15 @@
   hosts: all
 
   tasks:
-    - name: "pull ios facts"
+    - name: Gather current ios configuration facts from the device
       cisco.ios.ios_facts:
         gather_subset: config
+      register: ios_facts_current
+      when: "ansible_network_os == 'cisco.ios.ios'"
+
+    - name: Print the current ios configuration
+      debug:
+        msg: "{{ ios_facts_current.ansible_facts.ansible_net_config.split('\n') }}"
       when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: Merge provided configuration with device configuration
@@ -27,10 +33,17 @@
         save_when: modified
       when: "ansible_network_os == 'cisco.ios.ios'"
 
-    - name: "pull junos facts"
+    - name: Gather current Junos configuration facts from the device
       junipernetworks.junos.junos_facts:
         gather_subset: config
+      register: junos_facts_current
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
+
+    - name: Print the current Junos configuration to the screen
+      debug:
+        msg: "{{ junos_facts_current.ansible_facts.ansible_net_config.split('\n') }}"
+      when:
+        - "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name:
         Merge provided configuration with device configuration (default operation
@@ -51,9 +64,15 @@
       register: junos_facts
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
-    - name: "pull vyos facts"
+    - name: Gather configuration facts from the device
       vyos.vyos.vyos_facts:
         gather_subset: config
+      register: vyos_facts_current
+      when: "ansible_network_os == 'vyos.vyos.vyos'"
+
+    - name: Print the current vyos configuration to the screen
+      debug:
+        msg: "{{ vyos_facts_current.ansible_facts.ansible_net_config[0].splitlines() }}"
       when: "ansible_network_os == 'vyos.vyos.vyos'"
 
     - name: Merge provided configuration with device configuration
@@ -65,12 +84,9 @@
             vifs:
               - vlan_id: 200
                 description: VIF 200 - ETH2
-          - name: eth3
-            description: Configured by Ansible
-            mtu: 1500
           - name: bond1
             description: Bond - 1
-            mtu: 1280
+            mtu: 1200
           - name: vti2
             description: VTI - 2
             enabled: false
@@ -80,12 +96,12 @@
 
     - name: "Print Cisco Output"
       debug:
-        msg: "{{ ios_facts.commands }}"
+        msg: "{{ ios_facts.commands}}"
       when: "ansible_network_os == 'cisco.ios.ios'"
 
     - name: "Print Junos Output"
       debug:
-        msg: "{{ junos_facts.ansible_facts.ansible_net_config[0] | from_xml }}"
+        msg: "{{ junos_facts.commands.split('nc/')  }}"
       when: "ansible_network_os == 'junipernetworks.junos.junos'"
 
     - name: "Print Vyos Output"
